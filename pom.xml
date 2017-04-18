@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd ">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apereo.cas</groupId>
-    <artifactId>cas-overlay</artifactId>
+    <artifactId>deuba-cas-overlay</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
 
@@ -38,12 +38,13 @@
                     <recompressZippedFiles>false</recompressZippedFiles>
                     <archive>
                         <compress>false</compress>
-                        <manifestFile>${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp/META-INF/MANIFEST.MF
+                        <manifestFile>
+                            ${project.build.directory}/war/work/org.jasig.cas/cas-server-webapp/META-INF/MANIFEST.MF
                         </manifestFile>
                     </archive>
                     <overlays>
                         <overlay>
-                            <groupId>org.apereo.cas</groupId>
+                            <groupId>org.jasig.cas</groupId>
                             <artifactId>cas-server-webapp</artifactId>
                         </overlay>
                     </overlays>
@@ -59,17 +60,37 @@
     </build>
 
     <dependencies>
+        <!-- war overlay dependencies -->
         <dependency>
-            <groupId>org.apereo.cas</groupId>
+            <groupId>org.jasig.cas</groupId>
             <artifactId>cas-server-webapp</artifactId>
             <version>${cas.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
+        <!-- jdbc integration dependencies -->
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-jdbc</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.18</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
     </dependencies>
 
     <properties>
-        <cas.version>5.0.4</cas.version>
+        <!--cas.version>5.0.4</cas.version-->
+        <!--cas.version>5.0.2</cas.version-->
+        <cas.version>4.2.7</cas.version>
         <springboot.version>1.4.2.RELEASE</springboot.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
