@@ -26,8 +26,8 @@
         <ref bean="rememberMeAuthenticationMetaDataPopulator" />
     </util:list>
 
-    <bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
-          p:backingMap-ref="attrRepoBackingMap" />
+    <!--bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
+          p:backingMap-ref="attrRepoBackingMap" /-->
 
     <!--alias name="acceptUsersAuthenticationHandler" alias="primaryAuthenticationHandler" /-->
     <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver" />
@@ -113,6 +113,27 @@
         <property name="fieldUser" value="login_id"/>
         <property name="tableUsers" value="timeo_user"/>
         <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--bean id="attributeRepository" class="org.jasig.services.persondir.support.NamedStubPersonAttributeDao"
+          p:backingMap-ref="attrRepoBackingMap" /-->
+
+    <alias name="singleRowJdbcPersonAttributeDao" alias="attributeRepository" />
+    
+    <bean id="singleRowJdbcPersonAttributeDao" class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">
+        <constructor-arg index="0" ref="dataSource" />
+        <constructor-arg index="1" value="SELECT * FROM timeo_user where {0}" />
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username" value="login_id" />
+            </map>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="login_id" value="username" />
+                <entry key="stakeholder_id" value="stakeholderId" />
+            </map>
+        </property>
     </bean>
 
 </beans>
